@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.architectureexample.R;
+import com.example.architectureexample.databinding.NoteItemBinding;
 import com.example.architectureexample.model.Note;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
                     oldItem.getPriority() == newItem.getPriority();
         }
     };
+
 
     @NonNull
     @Override

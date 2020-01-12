@@ -3,6 +3,7 @@ package com.example.architectureexample.ui;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.architectureexample.R;
+import com.example.architectureexample.databinding.ActivityMainBinding;
 import com.example.architectureexample.model.Note;
 import com.example.architectureexample.model.NoteViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         setContentView(R.layout.activity_main);
+
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -97,8 +100,15 @@ public class MainActivity extends AppCompatActivity {
             String description = data.getStringExtra(NewEditNoteActivity.EXTRA_DESCRIPTION);
             int priority = data.getIntExtra(NewEditNoteActivity.EXTRA_NUMBER_PICKER, 1);
 
-            Note note = new Note(title, description, priority);
-            mNoteViewModel.insert(note);
+            final Note note = new Note(title, description, priority);
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mNoteViewModel.insert(note);
+                }
+            }, 3000);
+
 
             Toast.makeText(this, "Note Saved", Toast.LENGTH_LONG).show();
 
